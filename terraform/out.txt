@@ -1,0 +1,1172 @@
+# data.aws_availability_zones.available:
+data "aws_availability_zones" "available" {
+    group_names = [
+        "us-east-1",
+    ]
+    id          = "us-east-1"
+    names       = [
+        "us-east-1a",
+        "us-east-1b",
+        "us-east-1c",
+        "us-east-1d",
+        "us-east-1e",
+        "us-east-1f",
+    ]
+    state       = "available"
+    zone_ids    = [
+        "use1-az4",
+        "use1-az6",
+        "use1-az1",
+        "use1-az2",
+        "use1-az3",
+        "use1-az5",
+    ]
+}
+
+
+# module.alb.aws_lb.default[0]:
+resource "aws_lb" "default" {
+    arn                                                          = "arn:aws:elasticloadbalancing:us-east-1:426857564226:loadbalancer/app/shared/8720c09e21ae2975"
+    arn_suffix                                                   = "app/shared/8720c09e21ae2975"
+    client_keep_alive                                            = 3600
+    customer_owned_ipv4_pool                                     = [90mnull[0m[0m
+    desync_mitigation_mode                                       = "defensive"
+    dns_name                                                     = "shared-1011040528.us-east-1.elb.amazonaws.com"
+    drop_invalid_header_fields                                   = false
+    enable_cross_zone_load_balancing                             = true
+    enable_deletion_protection                                   = false
+    enable_http2                                                 = true
+    enable_tls_version_and_cipher_suite_headers                  = false
+    enable_waf_fail_open                                         = false
+    enable_xff_client_port                                       = false
+    enforce_security_group_inbound_rules_on_private_link_traffic = [90mnull[0m[0m
+    id                                                           = "arn:aws:elasticloadbalancing:us-east-1:426857564226:loadbalancer/app/shared/8720c09e21ae2975"
+    idle_timeout                                                 = 60
+    internal                                                     = false
+    ip_address_type                                              = "ipv4"
+    load_balancer_type                                           = "application"
+    name                                                         = "shared"
+    name_prefix                                                  = [90mnull[0m[0m
+    preserve_host_header                                         = false
+    security_groups                                              = [
+        "sg-0ffa11819830878c8",
+    ]
+    subnets                                                      = [
+        "subnet-049c71e0bd5fb2fab",
+        "subnet-0b8580a38a8dceecd",
+    ]
+    tags                                                         = {
+        "Attributes" = "shared"
+        "Name"       = "shared"
+    }
+    tags_all                                                     = {
+        "Attributes" = "shared"
+        "Name"       = "shared"
+        "owner"      = "anish.sapkota"
+        "project"    = "eb-dotnet"
+        "silo"       = "intern"
+        "terraform"  = "true"
+    }
+    vpc_id                                                       = "vpc-0d16d88553389a01e"
+    xff_header_processing_mode                                   = "append"
+    zone_id                                                      = "Z35SXDOTRQ7X7K"
+
+    access_logs {
+        bucket  = [90mnull[0m[0m
+        enabled = false
+        prefix  = [90mnull[0m[0m
+    }
+
+    connection_logs {
+        bucket  = [90mnull[0m[0m
+        enabled = false
+        prefix  = [90mnull[0m[0m
+    }
+
+    subnet_mapping {
+        allocation_id        = [90mnull[0m[0m
+        ipv6_address         = [90mnull[0m[0m
+        outpost_id           = [90mnull[0m[0m
+        private_ipv4_address = [90mnull[0m[0m
+        subnet_id            = "subnet-049c71e0bd5fb2fab"
+    }
+    subnet_mapping {
+        allocation_id        = [90mnull[0m[0m
+        ipv6_address         = [90mnull[0m[0m
+        outpost_id           = [90mnull[0m[0m
+        private_ipv4_address = [90mnull[0m[0m
+        subnet_id            = "subnet-0b8580a38a8dceecd"
+    }
+}
+
+# module.alb.aws_lb_listener.http_forward[0]:
+resource "aws_lb_listener" "http_forward" {
+    arn               = "arn:aws:elasticloadbalancing:us-east-1:426857564226:listener/app/shared/8720c09e21ae2975/0c1f3af82f67ea00"
+    id                = "arn:aws:elasticloadbalancing:us-east-1:426857564226:listener/app/shared/8720c09e21ae2975/0c1f3af82f67ea00"
+    load_balancer_arn = "arn:aws:elasticloadbalancing:us-east-1:426857564226:loadbalancer/app/shared/8720c09e21ae2975"
+    port              = 80
+    protocol          = "HTTP"
+    ssl_policy        = [90mnull[0m[0m
+    tags              = {
+        "Attributes" = "shared"
+        "Name"       = "shared"
+    }
+    tags_all          = {
+        "Attributes" = "shared"
+        "Name"       = "shared"
+        "owner"      = "anish.sapkota"
+        "project"    = "eb-dotnet"
+        "silo"       = "intern"
+        "terraform"  = "true"
+    }
+
+    default_action {
+        order            = 1
+        target_group_arn = "arn:aws:elasticloadbalancing:us-east-1:426857564226:targetgroup/shared-default/99d521d9ed0ca4df"
+        type             = "forward"
+    }
+}
+
+# module.alb.aws_lb_target_group.default[0]:
+resource "aws_lb_target_group" "default" {
+    arn                                = "arn:aws:elasticloadbalancing:us-east-1:426857564226:targetgroup/shared-default/99d521d9ed0ca4df"
+    arn_suffix                         = "targetgroup/shared-default/99d521d9ed0ca4df"
+    deregistration_delay               = "15"
+    id                                 = "arn:aws:elasticloadbalancing:us-east-1:426857564226:targetgroup/shared-default/99d521d9ed0ca4df"
+    ip_address_type                    = "ipv4"
+    lambda_multi_value_headers_enabled = false
+    load_balancer_arns                 = [
+        "arn:aws:elasticloadbalancing:us-east-1:426857564226:loadbalancer/app/shared/8720c09e21ae2975",
+    ]
+    load_balancing_algorithm_type      = "round_robin"
+    load_balancing_anomaly_mitigation  = "off"
+    load_balancing_cross_zone_enabled  = "use_load_balancer_configuration"
+    name                               = "shared-default"
+    name_prefix                        = [90mnull[0m[0m
+    port                               = 80
+    protocol                           = "HTTP"
+    protocol_version                   = "HTTP1"
+    proxy_protocol_v2                  = false
+    slow_start                         = 0
+    tags                               = {
+        "Attributes" = "shared-default"
+        "Name"       = "shared-default"
+    }
+    tags_all                           = {
+        "Attributes" = "shared-default"
+        "Name"       = "shared-default"
+        "owner"      = "anish.sapkota"
+        "project"    = "eb-dotnet"
+        "silo"       = "intern"
+        "terraform"  = "true"
+    }
+    target_type                        = "ip"
+    vpc_id                             = "vpc-0d16d88553389a01e"
+
+    health_check {
+        enabled             = true
+        healthy_threshold   = 2
+        interval            = 15
+        matcher             = "200-399"
+        path                = "/"
+        port                = "traffic-port"
+        protocol            = "HTTP"
+        timeout             = 10
+        unhealthy_threshold = 2
+    }
+
+    stickiness {
+        cookie_duration = 86400
+        cookie_name     = [90mnull[0m[0m
+        enabled         = false
+        type            = "lb_cookie"
+    }
+
+    target_failover {}
+
+    target_health_state {}
+}
+
+# module.alb.aws_security_group.default[0]:
+resource "aws_security_group" "default" {
+    arn                    = "arn:aws:ec2:us-east-1:426857564226:security-group/sg-0ffa11819830878c8"
+    description            = "Controls access to the ALB (HTTP/HTTPS)"
+    egress                 = [
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = [90mnull[0m[0m
+            from_port        = 0
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "-1"
+            security_groups  = []
+            self             = false
+            to_port          = 0
+        },
+    ]
+    id                     = "sg-0ffa11819830878c8"
+    ingress                = [
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = [90mnull[0m[0m
+            from_port        = 80
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "tcp"
+            security_groups  = []
+            self             = false
+            to_port          = 80
+        },
+    ]
+    name                   = "shared"
+    name_prefix            = [90mnull[0m[0m
+    owner_id               = "426857564226"
+    revoke_rules_on_delete = false
+    tags                   = {
+        "Attributes" = "shared"
+        "Name"       = "shared"
+    }
+    tags_all               = {
+        "Attributes" = "shared"
+        "Name"       = "shared"
+        "owner"      = "anish.sapkota"
+        "project"    = "eb-dotnet"
+        "silo"       = "intern"
+        "terraform"  = "true"
+    }
+    vpc_id                 = "vpc-0d16d88553389a01e"
+}
+
+# module.alb.aws_security_group_rule.egress[0]:
+resource "aws_security_group_rule" "egress" {
+    cidr_blocks            = [
+        "0.0.0.0/0",
+    ]
+    description            = [90mnull[0m[0m
+    from_port              = 0
+    id                     = "sgrule-1135532373"
+    protocol               = "-1"
+    security_group_id      = "sg-0ffa11819830878c8"
+    security_group_rule_id = "sgr-0a24ac4748045fbcb"
+    self                   = false
+    to_port                = 0
+    type                   = "egress"
+}
+
+# module.alb.aws_security_group_rule.http_ingress[0]:
+resource "aws_security_group_rule" "http_ingress" {
+    cidr_blocks            = [
+        "0.0.0.0/0",
+    ]
+    description            = [90mnull[0m[0m
+    from_port              = 80
+    id                     = "sgrule-3827019016"
+    prefix_list_ids        = []
+    protocol               = "tcp"
+    security_group_id      = "sg-0ffa11819830878c8"
+    security_group_rule_id = "sgr-05cfc35159b389ba9"
+    self                   = false
+    to_port                = 80
+    type                   = "ingress"
+}
+
+
+# module.alb.module.access_logs.data.aws_partition.current:
+data "aws_partition" "current" {
+    dns_suffix         = "amazonaws.com"
+    id                 = "aws"
+    partition          = "aws"
+    reverse_dns_prefix = "com.amazonaws"
+}
+
+
+# module.elastic_beanstalk_application.data.aws_partition.current[0]:
+data "aws_partition" "current" {
+    dns_suffix         = "amazonaws.com"
+    id                 = "aws"
+    partition          = "aws"
+    reverse_dns_prefix = "com.amazonaws"
+}
+
+# module.elastic_beanstalk_application.aws_elastic_beanstalk_application.default[0]:
+resource "aws_elastic_beanstalk_application" "default" {
+    arn         = "arn:aws:elasticbeanstalk:us-east-1:426857564226:application/tfmodule-ue1-eb-d-eb-dotnet"
+    description = [90mnull[0m[0m
+    id          = "tfmodule-ue1-eb-d-eb-dotnet"
+    name        = "tfmodule-ue1-eb-d-eb-dotnet"
+    tags        = {}
+    tags_all    = {
+        "owner"     = "anish.sapkota"
+        "project"   = "eb-dotnet"
+        "silo"      = "intern"
+        "terraform" = "true"
+    }
+}
+
+
+# module.subnets.data.aws_availability_zones.default[0]:
+data "aws_availability_zones" "default" {
+    group_names = [
+        "us-east-1",
+    ]
+    id          = "us-east-1"
+    names       = [
+        "us-east-1a",
+        "us-east-1b",
+        "us-east-1c",
+        "us-east-1d",
+        "us-east-1e",
+        "us-east-1f",
+    ]
+    zone_ids    = [
+        "use1-az4",
+        "use1-az6",
+        "use1-az1",
+        "use1-az2",
+        "use1-az3",
+        "use1-az5",
+    ]
+
+    filter {
+        name   = "opt-in-status"
+        values = [
+            "opt-in-not-required",
+        ]
+    }
+}
+
+# module.subnets.aws_eip.default[0]:
+resource "aws_eip" "default" {
+    allocation_id            = "eipalloc-04d445d853ddeb62d"
+    arn                      = "arn:aws:ec2:us-east-1:426857564226:elastic-ip/eipalloc-04d445d853ddeb62d"
+    association_id           = "eipassoc-0551770f2ad20a34d"
+    carrier_ip               = [90mnull[0m[0m
+    customer_owned_ip        = [90mnull[0m[0m
+    customer_owned_ipv4_pool = [90mnull[0m[0m
+    domain                   = "vpc"
+    id                       = "eipalloc-04d445d853ddeb62d"
+    instance                 = [90mnull[0m[0m
+    network_border_group     = "us-east-1"
+    network_interface        = "eni-071839756ce8722a9"
+    private_dns              = "ip-172-16-107-155.ec2.internal"
+    private_ip               = "172.16.107.155"
+    ptr_record               = [90mnull[0m[0m
+    public_dns               = "ec2-44-215-82-239.compute-1.amazonaws.com"
+    public_ip                = "44.215.82.239"
+    public_ipv4_pool         = "amazon"
+    tags                     = {
+        "Attributes" = "nat"
+        "Name"       = "nat-use1a"
+    }
+    tags_all                 = {
+        "Attributes" = "nat"
+        "Name"       = "nat-use1a"
+        "owner"      = "anish.sapkota"
+        "project"    = "eb-dotnet"
+        "silo"       = "intern"
+        "terraform"  = "true"
+    }
+    vpc                      = true
+}
+
+# module.subnets.aws_eip.default[1]:
+resource "aws_eip" "default" {
+    allocation_id            = "eipalloc-0f29775c889c57e27"
+    arn                      = "arn:aws:ec2:us-east-1:426857564226:elastic-ip/eipalloc-0f29775c889c57e27"
+    association_id           = "eipassoc-0a265ef036172f7f0"
+    carrier_ip               = [90mnull[0m[0m
+    customer_owned_ip        = [90mnull[0m[0m
+    customer_owned_ipv4_pool = [90mnull[0m[0m
+    domain                   = "vpc"
+    id                       = "eipalloc-0f29775c889c57e27"
+    instance                 = [90mnull[0m[0m
+    network_border_group     = "us-east-1"
+    network_interface        = "eni-0dec11a444e2e76e5"
+    private_dns              = "ip-172-16-119-166.ec2.internal"
+    private_ip               = "172.16.119.166"
+    ptr_record               = [90mnull[0m[0m
+    public_dns               = "ec2-100-28-18-191.compute-1.amazonaws.com"
+    public_ip                = "100.28.18.191"
+    public_ipv4_pool         = "amazon"
+    tags                     = {
+        "Attributes" = "nat"
+        "Name"       = "nat-use1b"
+    }
+    tags_all                 = {
+        "Attributes" = "nat"
+        "Name"       = "nat-use1b"
+        "owner"      = "anish.sapkota"
+        "project"    = "eb-dotnet"
+        "silo"       = "intern"
+        "terraform"  = "true"
+    }
+    vpc                      = true
+}
+
+# module.subnets.aws_nat_gateway.default[0]:
+resource "aws_nat_gateway" "default" {
+    allocation_id                      = "eipalloc-04d445d853ddeb62d"
+    association_id                     = "eipassoc-0551770f2ad20a34d"
+    connectivity_type                  = "public"
+    id                                 = "nat-0570d8cec89561871"
+    network_interface_id               = "eni-071839756ce8722a9"
+    private_ip                         = "172.16.107.155"
+    public_ip                          = "44.215.82.239"
+    secondary_allocation_ids           = []
+    secondary_private_ip_address_count = 0
+    secondary_private_ip_addresses     = []
+    subnet_id                          = "subnet-0b8580a38a8dceecd"
+    tags                               = {
+        "Attributes" = "nat"
+        "Name"       = "nat-use1a"
+    }
+    tags_all                           = {
+        "Attributes" = "nat"
+        "Name"       = "nat-use1a"
+        "owner"      = "anish.sapkota"
+        "project"    = "eb-dotnet"
+        "silo"       = "intern"
+        "terraform"  = "true"
+    }
+}
+
+# module.subnets.aws_nat_gateway.default[1]:
+resource "aws_nat_gateway" "default" {
+    allocation_id                      = "eipalloc-0f29775c889c57e27"
+    association_id                     = "eipassoc-0a265ef036172f7f0"
+    connectivity_type                  = "public"
+    id                                 = "nat-0619226db11118748"
+    network_interface_id               = "eni-0dec11a444e2e76e5"
+    private_ip                         = "172.16.119.166"
+    public_ip                          = "100.28.18.191"
+    secondary_allocation_ids           = []
+    secondary_private_ip_address_count = 0
+    secondary_private_ip_addresses     = []
+    subnet_id                          = "subnet-049c71e0bd5fb2fab"
+    tags                               = {
+        "Attributes" = "nat"
+        "Name"       = "nat-use1b"
+    }
+    tags_all                           = {
+        "Attributes" = "nat"
+        "Name"       = "nat-use1b"
+        "owner"      = "anish.sapkota"
+        "project"    = "eb-dotnet"
+        "silo"       = "intern"
+        "terraform"  = "true"
+    }
+}
+
+# module.subnets.aws_network_acl.private[0]:
+resource "aws_network_acl" "private" {
+    arn        = "arn:aws:ec2:us-east-1:426857564226:network-acl/acl-080cfb9a6de03d20b"
+    egress     = [
+        {
+            action          = "allow"
+            cidr_block      = "0.0.0.0/0"
+            from_port       = 0
+            icmp_code       = 0
+            icmp_type       = 0
+            ipv6_cidr_block = [90mnull[0m[0m
+            protocol        = "-1"
+            rule_no         = 100
+            to_port         = 0
+        },
+    ]
+    id         = "acl-080cfb9a6de03d20b"
+    ingress    = [
+        {
+            action          = "allow"
+            cidr_block      = "0.0.0.0/0"
+            from_port       = 0
+            icmp_code       = 0
+            icmp_type       = 0
+            ipv6_cidr_block = [90mnull[0m[0m
+            protocol        = "-1"
+            rule_no         = 100
+            to_port         = 0
+        },
+    ]
+    owner_id   = "426857564226"
+    subnet_ids = [
+        "subnet-07a2220e981f3fb69",
+        "subnet-07fd9b6f96a3d1e2e",
+    ]
+    tags       = {
+        "Attributes" = "private"
+        "Name"       = "private"
+    }
+    tags_all   = {
+        "Attributes" = "private"
+        "Name"       = "private"
+        "owner"      = "anish.sapkota"
+        "project"    = "eb-dotnet"
+        "silo"       = "intern"
+        "terraform"  = "true"
+    }
+    vpc_id     = "vpc-0d16d88553389a01e"
+}
+
+# module.subnets.aws_network_acl.public[0]:
+resource "aws_network_acl" "public" {
+    arn        = "arn:aws:ec2:us-east-1:426857564226:network-acl/acl-0c19f89464ada2523"
+    egress     = [
+        {
+            action          = "allow"
+            cidr_block      = "0.0.0.0/0"
+            from_port       = 0
+            icmp_code       = 0
+            icmp_type       = 0
+            ipv6_cidr_block = [90mnull[0m[0m
+            protocol        = "-1"
+            rule_no         = 100
+            to_port         = 0
+        },
+    ]
+    id         = "acl-0c19f89464ada2523"
+    ingress    = [
+        {
+            action          = "allow"
+            cidr_block      = "0.0.0.0/0"
+            from_port       = 0
+            icmp_code       = 0
+            icmp_type       = 0
+            ipv6_cidr_block = [90mnull[0m[0m
+            protocol        = "-1"
+            rule_no         = 100
+            to_port         = 0
+        },
+    ]
+    owner_id   = "426857564226"
+    subnet_ids = [
+        "subnet-049c71e0bd5fb2fab",
+        "subnet-0b8580a38a8dceecd",
+    ]
+    tags       = {
+        "Attributes" = "public"
+        "Name"       = "public"
+    }
+    tags_all   = {
+        "Attributes" = "public"
+        "Name"       = "public"
+        "owner"      = "anish.sapkota"
+        "project"    = "eb-dotnet"
+        "silo"       = "intern"
+        "terraform"  = "true"
+    }
+    vpc_id     = "vpc-0d16d88553389a01e"
+}
+
+# module.subnets.aws_network_acl_rule.private4_egress[0]:
+resource "aws_network_acl_rule" "private4_egress" {
+    cidr_block      = "0.0.0.0/0"
+    egress          = true
+    from_port       = 0
+    id              = "nacl-557683093"
+    ipv6_cidr_block = [90mnull[0m[0m
+    network_acl_id  = "acl-080cfb9a6de03d20b"
+    protocol        = "-1"
+    rule_action     = "allow"
+    rule_number     = 100
+    to_port         = 0
+}
+
+# module.subnets.aws_network_acl_rule.private4_ingress[0]:
+resource "aws_network_acl_rule" "private4_ingress" {
+    cidr_block      = "0.0.0.0/0"
+    egress          = false
+    from_port       = 0
+    id              = "nacl-3684342215"
+    ipv6_cidr_block = [90mnull[0m[0m
+    network_acl_id  = "acl-080cfb9a6de03d20b"
+    protocol        = "-1"
+    rule_action     = "allow"
+    rule_number     = 100
+    to_port         = 0
+}
+
+# module.subnets.aws_network_acl_rule.public4_egress[0]:
+resource "aws_network_acl_rule" "public4_egress" {
+    cidr_block      = "0.0.0.0/0"
+    egress          = true
+    from_port       = 0
+    id              = "nacl-767577451"
+    ipv6_cidr_block = [90mnull[0m[0m
+    network_acl_id  = "acl-0c19f89464ada2523"
+    protocol        = "-1"
+    rule_action     = "allow"
+    rule_number     = 100
+    to_port         = 0
+}
+
+# module.subnets.aws_network_acl_rule.public4_ingress[0]:
+resource "aws_network_acl_rule" "public4_ingress" {
+    cidr_block      = "0.0.0.0/0"
+    egress          = false
+    from_port       = 0
+    id              = "nacl-2173942528"
+    ipv6_cidr_block = [90mnull[0m[0m
+    network_acl_id  = "acl-0c19f89464ada2523"
+    protocol        = "-1"
+    rule_action     = "allow"
+    rule_number     = 100
+    to_port         = 0
+}
+
+# module.subnets.aws_route.nat4[0]:
+resource "aws_route" "nat4" {
+    carrier_gateway_id          = [90mnull[0m[0m
+    core_network_arn            = [90mnull[0m[0m
+    destination_cidr_block      = "0.0.0.0/0"
+    destination_ipv6_cidr_block = [90mnull[0m[0m
+    destination_prefix_list_id  = [90mnull[0m[0m
+    egress_only_gateway_id      = [90mnull[0m[0m
+    gateway_id                  = [90mnull[0m[0m
+    id                          = "r-rtb-0950887aaa9f857051080289494"
+    instance_id                 = [90mnull[0m[0m
+    instance_owner_id           = [90mnull[0m[0m
+    local_gateway_id            = [90mnull[0m[0m
+    nat_gateway_id              = "nat-0570d8cec89561871"
+    network_interface_id        = [90mnull[0m[0m
+    origin                      = "CreateRoute"
+    route_table_id              = "rtb-0950887aaa9f85705"
+    state                       = "active"
+    transit_gateway_id          = [90mnull[0m[0m
+    vpc_endpoint_id             = [90mnull[0m[0m
+    vpc_peering_connection_id   = [90mnull[0m[0m
+
+    timeouts {}
+}
+
+# module.subnets.aws_route.nat4[1]:
+resource "aws_route" "nat4" {
+    carrier_gateway_id          = [90mnull[0m[0m
+    core_network_arn            = [90mnull[0m[0m
+    destination_cidr_block      = "0.0.0.0/0"
+    destination_ipv6_cidr_block = [90mnull[0m[0m
+    destination_prefix_list_id  = [90mnull[0m[0m
+    egress_only_gateway_id      = [90mnull[0m[0m
+    gateway_id                  = [90mnull[0m[0m
+    id                          = "r-rtb-0f87831037c0ccfc91080289494"
+    instance_id                 = [90mnull[0m[0m
+    instance_owner_id           = [90mnull[0m[0m
+    local_gateway_id            = [90mnull[0m[0m
+    nat_gateway_id              = "nat-0619226db11118748"
+    network_interface_id        = [90mnull[0m[0m
+    origin                      = "CreateRoute"
+    route_table_id              = "rtb-0f87831037c0ccfc9"
+    state                       = "active"
+    transit_gateway_id          = [90mnull[0m[0m
+    vpc_endpoint_id             = [90mnull[0m[0m
+    vpc_peering_connection_id   = [90mnull[0m[0m
+
+    timeouts {}
+}
+
+# module.subnets.aws_route.public[0]:
+resource "aws_route" "public" {
+    carrier_gateway_id          = [90mnull[0m[0m
+    core_network_arn            = [90mnull[0m[0m
+    destination_cidr_block      = "0.0.0.0/0"
+    destination_ipv6_cidr_block = [90mnull[0m[0m
+    destination_prefix_list_id  = [90mnull[0m[0m
+    egress_only_gateway_id      = [90mnull[0m[0m
+    gateway_id                  = "igw-0406beeb71e57ca3b"
+    id                          = "r-rtb-09bfc8678ec55c1db1080289494"
+    instance_id                 = [90mnull[0m[0m
+    instance_owner_id           = [90mnull[0m[0m
+    local_gateway_id            = [90mnull[0m[0m
+    nat_gateway_id              = [90mnull[0m[0m
+    network_interface_id        = [90mnull[0m[0m
+    origin                      = "CreateRoute"
+    route_table_id              = "rtb-09bfc8678ec55c1db"
+    state                       = "active"
+    transit_gateway_id          = [90mnull[0m[0m
+    vpc_endpoint_id             = [90mnull[0m[0m
+    vpc_peering_connection_id   = [90mnull[0m[0m
+
+    timeouts {}
+}
+
+# module.subnets.aws_route_table.private[0]:
+resource "aws_route_table" "private" {
+    arn              = "arn:aws:ec2:us-east-1:426857564226:route-table/rtb-0950887aaa9f85705"
+    id               = "rtb-0950887aaa9f85705"
+    owner_id         = "426857564226"
+    propagating_vgws = []
+    route            = [
+        {
+            carrier_gateway_id         = [90mnull[0m[0m
+            cidr_block                 = "0.0.0.0/0"
+            core_network_arn           = [90mnull[0m[0m
+            destination_prefix_list_id = [90mnull[0m[0m
+            egress_only_gateway_id     = [90mnull[0m[0m
+            gateway_id                 = [90mnull[0m[0m
+            ipv6_cidr_block            = [90mnull[0m[0m
+            local_gateway_id           = [90mnull[0m[0m
+            nat_gateway_id             = "nat-0570d8cec89561871"
+            network_interface_id       = [90mnull[0m[0m
+            transit_gateway_id         = [90mnull[0m[0m
+            vpc_endpoint_id            = [90mnull[0m[0m
+            vpc_peering_connection_id  = [90mnull[0m[0m
+        },
+    ]
+    tags             = {
+        "Attributes" = "private"
+        "Name"       = "private-use1a"
+    }
+    tags_all         = {
+        "Attributes" = "private"
+        "Name"       = "private-use1a"
+        "owner"      = "anish.sapkota"
+        "project"    = "eb-dotnet"
+        "silo"       = "intern"
+        "terraform"  = "true"
+    }
+    vpc_id           = "vpc-0d16d88553389a01e"
+}
+
+# module.subnets.aws_route_table.private[1]:
+resource "aws_route_table" "private" {
+    arn              = "arn:aws:ec2:us-east-1:426857564226:route-table/rtb-0f87831037c0ccfc9"
+    id               = "rtb-0f87831037c0ccfc9"
+    owner_id         = "426857564226"
+    propagating_vgws = []
+    route            = [
+        {
+            carrier_gateway_id         = [90mnull[0m[0m
+            cidr_block                 = "0.0.0.0/0"
+            core_network_arn           = [90mnull[0m[0m
+            destination_prefix_list_id = [90mnull[0m[0m
+            egress_only_gateway_id     = [90mnull[0m[0m
+            gateway_id                 = [90mnull[0m[0m
+            ipv6_cidr_block            = [90mnull[0m[0m
+            local_gateway_id           = [90mnull[0m[0m
+            nat_gateway_id             = "nat-0619226db11118748"
+            network_interface_id       = [90mnull[0m[0m
+            transit_gateway_id         = [90mnull[0m[0m
+            vpc_endpoint_id            = [90mnull[0m[0m
+            vpc_peering_connection_id  = [90mnull[0m[0m
+        },
+    ]
+    tags             = {
+        "Attributes" = "private"
+        "Name"       = "private-use1b"
+    }
+    tags_all         = {
+        "Attributes" = "private"
+        "Name"       = "private-use1b"
+        "owner"      = "anish.sapkota"
+        "project"    = "eb-dotnet"
+        "silo"       = "intern"
+        "terraform"  = "true"
+    }
+    vpc_id           = "vpc-0d16d88553389a01e"
+}
+
+# module.subnets.aws_route_table.public[0]:
+resource "aws_route_table" "public" {
+    arn              = "arn:aws:ec2:us-east-1:426857564226:route-table/rtb-09bfc8678ec55c1db"
+    id               = "rtb-09bfc8678ec55c1db"
+    owner_id         = "426857564226"
+    propagating_vgws = []
+    route            = [
+        {
+            carrier_gateway_id         = [90mnull[0m[0m
+            cidr_block                 = "0.0.0.0/0"
+            core_network_arn           = [90mnull[0m[0m
+            destination_prefix_list_id = [90mnull[0m[0m
+            egress_only_gateway_id     = [90mnull[0m[0m
+            gateway_id                 = "igw-0406beeb71e57ca3b"
+            ipv6_cidr_block            = [90mnull[0m[0m
+            local_gateway_id           = [90mnull[0m[0m
+            nat_gateway_id             = [90mnull[0m[0m
+            network_interface_id       = [90mnull[0m[0m
+            transit_gateway_id         = [90mnull[0m[0m
+            vpc_endpoint_id            = [90mnull[0m[0m
+            vpc_peering_connection_id  = [90mnull[0m[0m
+        },
+    ]
+    tags             = {
+        "Attributes" = "public"
+        "Name"       = "public"
+    }
+    tags_all         = {
+        "Attributes" = "public"
+        "Name"       = "public"
+        "owner"      = "anish.sapkota"
+        "project"    = "eb-dotnet"
+        "silo"       = "intern"
+        "terraform"  = "true"
+    }
+    vpc_id           = "vpc-0d16d88553389a01e"
+}
+
+# module.subnets.aws_route_table_association.private[0]:
+resource "aws_route_table_association" "private" {
+    gateway_id     = [90mnull[0m[0m
+    id             = "rtbassoc-04f664eeaf22acdb8"
+    route_table_id = "rtb-0950887aaa9f85705"
+    subnet_id      = "subnet-07fd9b6f96a3d1e2e"
+}
+
+# module.subnets.aws_route_table_association.private[1]:
+resource "aws_route_table_association" "private" {
+    gateway_id     = [90mnull[0m[0m
+    id             = "rtbassoc-06c972e85950ad4fe"
+    route_table_id = "rtb-0f87831037c0ccfc9"
+    subnet_id      = "subnet-07a2220e981f3fb69"
+}
+
+# module.subnets.aws_route_table_association.public[0]:
+resource "aws_route_table_association" "public" {
+    gateway_id     = [90mnull[0m[0m
+    id             = "rtbassoc-0127a85ac7f19c96f"
+    route_table_id = "rtb-09bfc8678ec55c1db"
+    subnet_id      = "subnet-0b8580a38a8dceecd"
+}
+
+# module.subnets.aws_route_table_association.public[1]:
+resource "aws_route_table_association" "public" {
+    gateway_id     = [90mnull[0m[0m
+    id             = "rtbassoc-0c2a40570d901de69"
+    route_table_id = "rtb-09bfc8678ec55c1db"
+    subnet_id      = "subnet-049c71e0bd5fb2fab"
+}
+
+# module.subnets.aws_subnet.private[0]:
+resource "aws_subnet" "private" {
+    arn                                            = "arn:aws:ec2:us-east-1:426857564226:subnet/subnet-07fd9b6f96a3d1e2e"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "us-east-1a"
+    availability_zone_id                           = "use1-az4"
+    cidr_block                                     = "172.16.0.0/20"
+    customer_owned_ipv4_pool                       = [90mnull[0m[0m
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-07fd9b6f96a3d1e2e"
+    ipv6_cidr_block                                = [90mnull[0m[0m
+    ipv6_cidr_block_association_id                 = [90mnull[0m[0m
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = false
+    outpost_arn                                    = [90mnull[0m[0m
+    owner_id                                       = "426857564226"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags                                           = {
+        "Attributes" = "private"
+        "Name"       = "private-use1a"
+    }
+    tags_all                                       = {
+        "Attributes" = "private"
+        "Name"       = "private-use1a"
+        "owner"      = "anish.sapkota"
+        "project"    = "eb-dotnet"
+        "silo"       = "intern"
+        "terraform"  = "true"
+    }
+    vpc_id                                         = "vpc-0d16d88553389a01e"
+
+    timeouts {}
+}
+
+# module.subnets.aws_subnet.private[1]:
+resource "aws_subnet" "private" {
+    arn                                            = "arn:aws:ec2:us-east-1:426857564226:subnet/subnet-07a2220e981f3fb69"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "us-east-1b"
+    availability_zone_id                           = "use1-az6"
+    cidr_block                                     = "172.16.16.0/20"
+    customer_owned_ipv4_pool                       = [90mnull[0m[0m
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-07a2220e981f3fb69"
+    ipv6_cidr_block                                = [90mnull[0m[0m
+    ipv6_cidr_block_association_id                 = [90mnull[0m[0m
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = false
+    outpost_arn                                    = [90mnull[0m[0m
+    owner_id                                       = "426857564226"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags                                           = {
+        "Attributes" = "private"
+        "Name"       = "private-use1b"
+    }
+    tags_all                                       = {
+        "Attributes" = "private"
+        "Name"       = "private-use1b"
+        "owner"      = "anish.sapkota"
+        "project"    = "eb-dotnet"
+        "silo"       = "intern"
+        "terraform"  = "true"
+    }
+    vpc_id                                         = "vpc-0d16d88553389a01e"
+
+    timeouts {}
+}
+
+# module.subnets.aws_subnet.public[0]:
+resource "aws_subnet" "public" {
+    arn                                            = "arn:aws:ec2:us-east-1:426857564226:subnet/subnet-0b8580a38a8dceecd"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "us-east-1a"
+    availability_zone_id                           = "use1-az4"
+    cidr_block                                     = "172.16.96.0/20"
+    customer_owned_ipv4_pool                       = [90mnull[0m[0m
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-0b8580a38a8dceecd"
+    ipv6_cidr_block                                = [90mnull[0m[0m
+    ipv6_cidr_block_association_id                 = [90mnull[0m[0m
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = true
+    outpost_arn                                    = [90mnull[0m[0m
+    owner_id                                       = "426857564226"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags                                           = {
+        "Attributes" = "public"
+        "Name"       = "public-use1a"
+    }
+    tags_all                                       = {
+        "Attributes" = "public"
+        "Name"       = "public-use1a"
+        "owner"      = "anish.sapkota"
+        "project"    = "eb-dotnet"
+        "silo"       = "intern"
+        "terraform"  = "true"
+    }
+    vpc_id                                         = "vpc-0d16d88553389a01e"
+
+    timeouts {}
+}
+
+# module.subnets.aws_subnet.public[1]:
+resource "aws_subnet" "public" {
+    arn                                            = "arn:aws:ec2:us-east-1:426857564226:subnet/subnet-049c71e0bd5fb2fab"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "us-east-1b"
+    availability_zone_id                           = "use1-az6"
+    cidr_block                                     = "172.16.112.0/20"
+    customer_owned_ipv4_pool                       = [90mnull[0m[0m
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-049c71e0bd5fb2fab"
+    ipv6_cidr_block                                = [90mnull[0m[0m
+    ipv6_cidr_block_association_id                 = [90mnull[0m[0m
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = true
+    outpost_arn                                    = [90mnull[0m[0m
+    owner_id                                       = "426857564226"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags                                           = {
+        "Attributes" = "public"
+        "Name"       = "public-use1b"
+    }
+    tags_all                                       = {
+        "Attributes" = "public"
+        "Name"       = "public-use1b"
+        "owner"      = "anish.sapkota"
+        "project"    = "eb-dotnet"
+        "silo"       = "intern"
+        "terraform"  = "true"
+    }
+    vpc_id                                         = "vpc-0d16d88553389a01e"
+
+    timeouts {}
+}
+
+
+# module.subnets.module.utils.data.aws_regions.complete:
+data "aws_regions" "complete" {
+    all_regions = true
+    id          = "aws"
+    names       = [
+        "af-south-1",
+        "ap-east-1",
+        "ap-northeast-1",
+        "ap-northeast-2",
+        "ap-northeast-3",
+        "ap-south-1",
+        "ap-south-2",
+        "ap-southeast-1",
+        "ap-southeast-2",
+        "ap-southeast-3",
+        "ap-southeast-4",
+        "ca-central-1",
+        "ca-west-1",
+        "eu-central-1",
+        "eu-central-2",
+        "eu-north-1",
+        "eu-south-1",
+        "eu-south-2",
+        "eu-west-1",
+        "eu-west-2",
+        "eu-west-3",
+        "il-central-1",
+        "me-central-1",
+        "me-south-1",
+        "sa-east-1",
+        "us-east-1",
+        "us-east-2",
+        "us-west-1",
+        "us-west-2",
+    ]
+}
+
+# module.subnets.module.utils.data.aws_regions.default:
+data "aws_regions" "default" {
+    all_regions = true
+    id          = "aws"
+    names       = [
+        "ap-northeast-1",
+        "ap-northeast-2",
+        "ap-northeast-3",
+        "ap-south-1",
+        "ap-southeast-1",
+        "ap-southeast-2",
+        "ca-central-1",
+        "eu-central-1",
+        "eu-north-1",
+        "eu-west-1",
+        "eu-west-2",
+        "eu-west-3",
+        "sa-east-1",
+        "us-east-1",
+        "us-east-2",
+        "us-west-1",
+        "us-west-2",
+    ]
+
+    filter {
+        name   = "opt-in-status"
+        values = [
+            "opt-in-not-required",
+        ]
+    }
+}
+
+# module.subnets.module.utils.data.aws_regions.not_opted_in:
+data "aws_regions" "not_opted_in" {
+    all_regions = true
+    id          = "aws"
+    names       = [
+        "af-south-1",
+        "ap-east-1",
+        "ap-south-2",
+        "ap-southeast-3",
+        "ap-southeast-4",
+        "ca-west-1",
+        "eu-central-2",
+        "eu-south-1",
+        "eu-south-2",
+        "il-central-1",
+        "me-central-1",
+        "me-south-1",
+    ]
+
+    filter {
+        name   = "opt-in-status"
+        values = [
+            "not-opted-in",
+        ]
+    }
+}
+
+# module.subnets.module.utils.data.aws_regions.opted_in:
+data "aws_regions" "opted_in" {
+    all_regions = true
+    id          = "aws"
+    names       = []
+
+    filter {
+        name   = "opt-in-status"
+        values = [
+            "opted-in",
+        ]
+    }
+}
+
+
+# module.vpc.aws_default_security_group.default[0]:
+resource "aws_default_security_group" "default" {
+    arn                    = "arn:aws:ec2:us-east-1:426857564226:security-group/sg-0301ed67991692a14"
+    description            = "default VPC security group"
+    egress                 = []
+    id                     = "sg-0301ed67991692a14"
+    ingress                = []
+    name                   = "default"
+    name_prefix            = [90mnull[0m[0m
+    owner_id               = "426857564226"
+    revoke_rules_on_delete = false
+    tags                   = {
+        "Name" = "-default"
+    }
+    tags_all               = {
+        "Name"      = "-default"
+        "owner"     = "anish.sapkota"
+        "project"   = "eb-dotnet"
+        "silo"      = "intern"
+        "terraform" = "true"
+    }
+    vpc_id                 = "vpc-0d16d88553389a01e"
+}
+
+# module.vpc.aws_internet_gateway.default[0]:
+resource "aws_internet_gateway" "default" {
+    arn      = "arn:aws:ec2:us-east-1:426857564226:internet-gateway/igw-0406beeb71e57ca3b"
+    id       = "igw-0406beeb71e57ca3b"
+    owner_id = "426857564226"
+    tags     = {}
+    tags_all = {
+        "owner"     = "anish.sapkota"
+        "project"   = "eb-dotnet"
+        "silo"      = "intern"
+        "terraform" = "true"
+    }
+    vpc_id   = "vpc-0d16d88553389a01e"
+}
+
+# module.vpc.aws_vpc.default[0]:
+resource "aws_vpc" "default" {
+    arn                                  = "arn:aws:ec2:us-east-1:426857564226:vpc/vpc-0d16d88553389a01e"
+    assign_generated_ipv6_cidr_block     = true
+    cidr_block                           = "172.16.0.0/16"
+    default_network_acl_id               = "acl-022e16aeb646a2f7c"
+    default_route_table_id               = "rtb-0416ccec57c4b7a27"
+    default_security_group_id            = "sg-0301ed67991692a14"
+    dhcp_options_id                      = "dopt-0e37c64a8c849a8fc"
+    enable_dns_hostnames                 = true
+    enable_dns_support                   = true
+    enable_network_address_usage_metrics = false
+    id                                   = "vpc-0d16d88553389a01e"
+    instance_tenancy                     = "default"
+    ipv6_association_id                  = "vpc-cidr-assoc-0d85ad01ae6395317"
+    ipv6_cidr_block                      = "2600:1f18:4ff2:1300::/56"
+    ipv6_cidr_block_network_border_group = "us-east-1"
+    ipv6_ipam_pool_id                    = [90mnull[0m[0m
+    ipv6_netmask_length                  = 0
+    main_route_table_id                  = "rtb-0416ccec57c4b7a27"
+    owner_id                             = "426857564226"
+    tags                                 = {}
+    tags_all                             = {
+        "owner"     = "anish.sapkota"
+        "project"   = "eb-dotnet"
+        "silo"      = "intern"
+        "terraform" = "true"
+    }
+}
