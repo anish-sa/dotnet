@@ -15,6 +15,6 @@ jobs:
         dotnet-version: 8.0.105
     - name: Publish
       # working_directory: ./proj
-      run: cd proj && dotnet publish --output ./publish
+      run: cd proj/app && dotnet publish --output ../publish
     - name: list published
-      run: ls ./publish
+      run: ls ../publish
