@@ -5,14 +5,15 @@ on:
     branches: [ main ]
 
 jobs:
-  runs-on: ubuntu-latest
-  steps:
-  - uses: actions/checkout@v2
-  - name: Setup dotnet 
-    uses: actions/setup-dotnet@v4
-    with:
-      dotnet-version: 8.0.105
-  - name: Publish
-    run: dotnet publish --output ./publish
-  - name: list published
-    run: ls ./publish
+  dotnet_publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup dotnet 
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.105
+    - name: Publish
+      run: dotnet publish --output ./publish
+    - name: list published
+      run: ls ./publish
