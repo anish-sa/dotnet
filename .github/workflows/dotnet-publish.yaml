@@ -17,4 +17,4 @@ jobs:
       # working_directory: ./proj
       run: cd proj/app && dotnet publish --output ../publish
     - name: list published
-      run: ls proj/publish
+      run: ls proj/publish/
